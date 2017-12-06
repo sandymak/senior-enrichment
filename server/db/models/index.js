@@ -13,7 +13,7 @@ const Campus = require('./campus')
 Student.belongsTo(Campus);
 Campus.hasMany(Student);
 
-// SANDY - WHY DO WE NEED TO EXPORT ALL MODELS HERE?!?!!?!?!?!
+// SANDY note - we technically do not need to export all models here. We DO want to require them just to ensure we are running Student and Campus and those models get built in our db
 module.exports = {
   db,
   Student,
