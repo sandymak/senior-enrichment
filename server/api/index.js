@@ -12,6 +12,6 @@ apiRouter.get('/hello', (req, res) => res.send({
 // You can put all routes in this file; HOWEVER, this file should almost be like a table of contents for the routers you create
 
 apiRouter.use('/students', require('./students'));
-// apiRouter.use('/campuses', require('./campuses'));
+apiRouter.use('/campi', require('./campi'));
 
 module.exports = apiRouter;
