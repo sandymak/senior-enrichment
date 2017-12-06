@@ -1,21 +1,21 @@
-import react, { Component } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {getStudents, fetchStudents} from '../reducers/studentReducer';
+import {fetchStudents} from '../reducers/studentReducer';
 
 class Students extends Component {
+
   componentDidMount() {
-    this.props.fetchStudents
+    this.props.loadStudents();
   }
 
   render() {
-    const students = this.props.students;
     return (
       <div>
         <ul>
-        {students.map(student => {
+        {this.props.students.map(student => {
           return (
             <li key={student.id}>
-              {student.name}
+              {student.firstName}
             </li>
           )
         })}
@@ -27,15 +27,21 @@ class Students extends Component {
 
 // Connect configuration
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (storeState) => {
   return {
-    students: state.students
-  }
+    students: storeState.students
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return { studentLoader: () => dispatch(fetchStudents) }
+  return {
+    loadStudents: () => {
+      dispatch(fetchStudents())
+      }
+    }
   }
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(Students);
+
+const StudentsContainer = connect(mapStateToProps, mapDispatchToProps)(Students);
+
+export default StudentsContainer;

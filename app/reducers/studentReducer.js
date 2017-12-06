@@ -1,56 +1,43 @@
 import axios from 'axios';
-import thunkMiddleware from 'redux-thunk';
-
 
 const initialState = [];
 
 // ACTION TYPE
-const GET_STUDENTS = 'GET_STUDENTS';
+const GOT_STUDENTS = 'GOT_STUDENTS';
 
 
 // ACTION CREATOR
-const getStudents = students => {
+const gotStudents = students => {
   const action = {
-    type: GET_STUDENTS,
+    type: GOT_STUDENTS,
     students
   };
   return action;
 }
 
-// THUNK CREATORS!!!
+// THUNK ACTION CREATORS!!! generates a function that can be dispatched because we are using `redux-thunk`
 export function fetchStudents() {
-  return function thunk(dispatch) {
+  return function thunkFunc(dispatch) {
     return axios.get('/api/students')
       .then(res => res.data)
       .then(students => {
-        const action = getStudents(students);
+        const action = gotStudents(students);
         dispatch(action);
       })
       .catch(console.error);
   }
 }
 
-
 // REDUCER
-
-function reducer(state = initialState, action) {
+const studentReducer = (state = initialState, action) => {
   switch (action.type) {
-    case GET_STUDENTS:
-      return {
-        action.students
-      };
+    case GOT_STUDENTS:
+      return action.students;
 
     default:
       return state
   }
 }
 
+export default studentReducer
 
-
-// const initialState = {}
-
-// const rootReducer = function(state = initialState, action) {
-//   switch(action.type) {
-//     default: return state
-//   }
-// };
