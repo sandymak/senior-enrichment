@@ -11,3 +11,5 @@ module.exports = new Sequelize(`postgres://localhost:5432/${pkg.name}`, {
 });
 
 // don't forget to run our models files and make all associations for our Sequelize objects (if you do it here consider circular references)
+
+// SANDY NOTE - why would it be circular references if we create associations here???

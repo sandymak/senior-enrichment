@@ -63,7 +63,11 @@ router.put('/:id', (req, res, next) => {
 
 // Delete api/student
 router.delete('/:id', (req, res, next) => {
-  req.student.destroy()
+  Student.destroy({
+    where: {
+      id: req.param.id
+    }
+  })
   .then(() => res.sendStatus(202))
   .catch(next)
 });

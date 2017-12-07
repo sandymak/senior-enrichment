@@ -13,15 +13,13 @@ class Campi extends Component {
   render() {
     return (
       <div>
-        <ul>
           {
             this.props.campi.map(campus => {
               return (
-                <li key={campus.id}>{campus.name}</li>
+                  <div>{campus.name}</div>
               )
             })
           }
-        </ul>
       </div>
     )
   }
@@ -39,6 +37,6 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-const CampiContainer = connect(mapStateToProps, mapDispatchToProps)(Campi)
+const AllCampiContainer = connect(mapStateToProps, mapDispatchToProps)(Campi)
 
-export default CampiContainer;
+export default AllCampiContainer;
