@@ -22,7 +22,9 @@ router.param('id', (req, res, next, id) => {
 
 // GET api/students
 router.get('/', (req, res, next) => {
-  Student.findAll()
+  Student.findAll({
+    include: { all: true}
+  })
     .then(students => {
       res.json(students)
     })
@@ -36,19 +38,20 @@ router.get('/:id', (req, res, next) => {
 
 // POST api/students
 router.post('/', (req, res, next) => {
-  Promise.all([
-    Student.create(req.body),
+  // Promise.all([
+    Student.create(req.body)
+    // ,
 
-    // .then(student => {
-    //   res.json(student)
-    // })
-    Campus.findOrCreate({
-      where: {
-        name: req.body.name
-      }
+    .then(student => {
+      res.json(student)
     })
-  ])
-  .then(([createdStudent, [theCampus, createdCampusBool]]) => createdStudent.setCampus(theCampus))
+    // Campus.findOrCreate({
+    //   where: {
+    //     name: req.body.name
+    //   }
+    // })
+  // ])
+  // .then(([createdStudent, [theCampus, createdCampusBool]]) => createdStudent.setCampus(theCampus))
   .catch(next)
 })
 

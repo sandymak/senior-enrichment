@@ -34,7 +34,7 @@ module.exports = db.define('student', {
   }
 }, {
   getterMethods: {
-    fullname() {
+    fullName() {
       return this.getDataValue('firstName') + ' ' +
         this.getDataValue(
           'lastName')

@@ -29,7 +29,7 @@ export function fetchStudents() {
 }
 
 // REDUCER
-const studentReducer = (state = initialState, action) => {
+const studentReducer = (state = [], action) => {
   switch (action.type) {
     case GOT_STUDENTS:
       return action.students;

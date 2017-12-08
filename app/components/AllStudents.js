@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {fetchStudents} from '../reducers/studentReducer';
 
@@ -11,15 +12,16 @@ class Students extends Component {
   render() {
     return (
       <div>
-        <ul>
+        <div>
         {this.props.students.map(student => {
           return (
-            <li key={student.id}>
-              {student.firstName}
-            </li>
+            <div key={student.id}>
+              <Link to={`/students/${student.id}`}>{student.fullName}</Link>
+
+            </div>
           )
         })}
-        </ul>
+        </div>
       </div>
     )
   }

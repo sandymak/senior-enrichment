@@ -12,6 +12,7 @@ import Navbar from './components/Navbar';
 import Home from './components/Home';
 import AllCampi from './components/AllCampi';
 import AllStudents from './components/AllStudents';
+import SingleStudent from './components/SingleStudent';
 
 render(
   <Provider store = {store} >
@@ -21,6 +22,7 @@ render(
           <Switch>
             <Route path="/home" component={Home} />
             <Route path="/campi" component={AllCampi} />
+            <Route exact path="/students/:studentId" component={SingleStudent} />
             <Route path="/students" component={AllStudents} />
             <Route component={Home} />
           </Switch>
