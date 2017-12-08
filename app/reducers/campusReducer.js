@@ -15,7 +15,7 @@ const gotCampi = (campi) => {
 }
 
 // Thunk Action Creator
-export function fetchCampus () {
+export function fetchCampi () {
  return function thunkfunc (dispatch) {
     axios.get('/api/campi')
     .then((res) => {dispatch(gotCampi(res.data))})

@@ -123,6 +123,7 @@ Once you've recorded your screencast, please *upload it to YouTube as an unliste
 
 NOTES
  <table >
+    <thead>
     <tr>
     <th>Id</th>
     <th>Firstname</th>
@@ -131,6 +132,8 @@ NOTES
     <th>GPA</th>
     <th>Campus</th>
     </tr>
+    </thead>
+    <tbody>
     <tr>
       <td>{student.firstName}</td>
       <td>{student.lastName}</td>
@@ -138,5 +141,7 @@ NOTES
       <td>{student.gpa}</td>
       <td>{`${schoolName}`}</td>
     </tr>
+    </tbody>
 
   </table>
+

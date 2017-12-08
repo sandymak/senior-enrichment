@@ -14,13 +14,11 @@ class SingleStudent extends Component {
     const urlId = Number(this.props.match.params.studentId);
     const student = this.props.students.find(foundStudent => foundStudent.id === urlId)
     if (student === undefined) {
-      console.log('=========== did this render??????' )
       return null
     }
     if (student !== undefined) {
       const schoolName = student.campus ? student.campus.name : 'Waiting for acceptance...'
-      console.log('========== whcat is schoolName?', schoolName)
-      return (ç
+      return (
         <div>
           <div>FirstName: {student.firstName}</div>
           <div>LastName: {student.lastName}</div>

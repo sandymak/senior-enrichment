@@ -38,20 +38,10 @@ router.get('/:id', (req, res, next) => {
 
 // POST api/students
 router.post('/', (req, res, next) => {
-  // Promise.all([
     Student.create(req.body)
-    // ,
-
     .then(student => {
       res.json(student)
     })
-    // Campus.findOrCreate({
-    //   where: {
-    //     name: req.body.name
-    //   }
-    // })
-  // ])
-  // .then(([createdStudent, [theCampus, createdCampusBool]]) => createdStudent.setCampus(theCampus))
   .catch(next)
 })
 

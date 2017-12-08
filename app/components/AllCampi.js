@@ -1,7 +1,8 @@
 // imports
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchCampus } from '../reducers/campusReducer'
+import { Link } from 'react-router-dom';
+import { fetchCampi } from '../reducers/campusReducer'
 
 // create presentational component
 class Campi extends Component {
@@ -16,10 +17,11 @@ class Campi extends Component {
           {
             this.props.campi.map(campus => {
               return (
-                  <div>{campus.name}</div>
+                <div key={campus.id}>
+                  <Link to={`/campi/${campus.id}`}>{campus.name}</Link>
+                </div>
               )
-            })
-          }
+            })}
       </div>
     )
   }
@@ -33,7 +35,7 @@ const mapStateToProps = storeState => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    loadCampi: () => {dispatch(fetchCampus())}
+    loadCampi: () => {dispatch(fetchCampi())}
   }
 }
 

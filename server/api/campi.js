@@ -22,7 +22,7 @@ router.param('id', (req, res, next, id) => {
 
 // GET api/campi
 router.get('/', (req, res, next) => {
-  Campus.findAll()
+  Campus.findAll({include: {all: true}})
   .then(campi => {
     res.json(campi)
   })
