@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchStudents } from '../reducers/studentReducer';
-
-// <div>{student.campus.name}</div>
+import { fetchStudents, deleteStudent } from '../reducers/studentReducer';
 
 class SingleStudent extends Component {
   componentDidMount() {
@@ -17,6 +15,7 @@ class SingleStudent extends Component {
       return null
     }
     if (student !== undefined) {
+      // const studentId = student.id
       const schoolName = student.campus ? student.campus.name : 'Waiting for acceptance...'
       return (
         <div>
@@ -25,6 +24,7 @@ class SingleStudent extends Component {
           <div>Email: {student.email}</div>
           <div>GPA: {student.gpa}</div>
           <div>SchoolName: {`${schoolName}`}</div>
+          {/*<button onClick={() => this.props.handleClick(studentId)}>Expel</button>*/}
         </div>
       )
     }
@@ -39,7 +39,8 @@ function mapStateToProps (storeState) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    loadStudents: () => {dispatch(fetchStudents())}
+    loadStudents: () => {dispatch(fetchStudents())},
+    // handleClick: (id) => {dispatch(deleteStudent(id))}
   }
 }
 

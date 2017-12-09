@@ -38,7 +38,6 @@ router.get('/:id', (req, res, next) => {
 
 // POST api/students
 router.post('/', (req, res, next) => {
-  console.log('=======', req.body);
     Student.create(req.body)
     .then(student => {
       res.json(student)
@@ -55,13 +54,9 @@ router.put('/:id', (req, res, next) => {
   .catch(next)
 })
 
-// Delete api/student
+// Delete api/students
 router.delete('/:id', (req, res, next) => {
-  Student.destroy({
-    where: {
-      id: req.param.id
-    }
-  })
+  req.student.destroy()
   .then(() => res.sendStatus(202))
   .catch(next)
 });
