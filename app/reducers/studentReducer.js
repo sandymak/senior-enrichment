@@ -4,7 +4,7 @@ const initialState = [];
 
 // ACTION TYPE
 const GOT_STUDENTS = 'GOT_STUDENTS';
-const ADDED_STUDENT = 'ADDED_STUDENT'
+const NEW_STUDENT = 'NEW_STUDENT'
 
 // ACTION CREATOR
 const gotStudents = students => {
@@ -15,11 +15,12 @@ const gotStudents = students => {
   return action;
 }
 
-const addedStudent = student => {
+const addedStudent = newStudent => {
   const action = {
-    type: ADDED_STUDENT,
-    student
+    type: NEW_STUDENT,
+    newStudent
   }
+  return action
 }
 
 // THUNK ACTION CREATORS!!! generates a function that can be dispatched because we are using `redux-thunk`
@@ -35,9 +36,12 @@ export function fetchStudents() {
   }
 }
 
-export function postStudents() {
-  return function thunkFun(dispatch) {
-    return axios.post()
+export function postStudent(newStudent) {
+  return function thunkFunc(dispatch) {
+    return axios.post('/api/students/', newStudent)
+      .then(res => res.data)
+      .then(student => dispatch(addedStudent(student)))
+      .catch(console.error)
   }
 }
 
@@ -46,6 +50,9 @@ const studentReducer = (state = initialState, action) => {
   switch (action.type) {
     case GOT_STUDENTS:
       return action.students;
+
+    case NEW_STUDENT:
+      return [...state, action.newStudent];
 
     default:
       return state

@@ -145,3 +145,21 @@ NOTES
 
   </table>
 
+
+...// submit....
+<input
+                type="text"
+                name=""
+
+              />
+
+
+required
+                onChange={console.log('changed something! YAY!')}>
+                  {
+                    campi.map(campus => {
+                      return (<option key={campus.id} value={campus.id}>{campus.name}</option>)
+                    })
+                  }
+<span>
+                  </span>

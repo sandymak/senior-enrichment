@@ -38,6 +38,7 @@ router.get('/:id', (req, res, next) => {
 
 // POST api/students
 router.post('/', (req, res, next) => {
+  console.log('=======', req.body);
     Student.create(req.body)
     .then(student => {
       res.json(student)

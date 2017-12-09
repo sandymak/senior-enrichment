@@ -12,12 +12,15 @@ class Students extends Component {
   render() {
     return (
       <div>
+        <h1>All Students</h1>
+
+        <button><Link to="/students/addStudent">Add A Student</Link></button>
+
         <div>
         {this.props.students.map(student => {
           return (
             <div key={student.id}>
               <Link to={`/students/${student.id}`}>{student.fullName}</Link>
-
             </div>
           )
         })}

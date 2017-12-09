@@ -50,7 +50,7 @@ REACT
 COMPONENT creation workflow
 
 imports
-1) React, {component{}
+1) React, {component}
 2) thunk func
 3) connect
 
