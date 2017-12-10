@@ -7,16 +7,18 @@ class SingleStudent extends Component {
     this.props.loadStudents()
   }
 
-
   render () {
+    // URL and
     const urlId = Number(this.props.match.params.studentId);
-    const student = this.props.students.find(foundStudent => foundStudent.id === urlId)
+    const student = this.props.students.find(foundStudent => foundStudent.id === urlId);
+
     if (student === undefined) {
       return null
     }
     if (student !== undefined) {
-      // const studentId = student.id
       const schoolName = student.campus ? student.campus.name : 'Waiting for acceptance...'
+      const studentId = student.id;
+
       return (
         <div>
           <div>FirstName: {student.firstName}</div>
@@ -24,7 +26,7 @@ class SingleStudent extends Component {
           <div>Email: {student.email}</div>
           <div>GPA: {student.gpa}</div>
           <div>SchoolName: {`${schoolName}`}</div>
-          {/*<button onClick={() => this.props.handleClick(studentId)}>Expel</button>*/}
+        <button onClick={() => this.props.handleClick(studentId)}>Remove</button>
         </div>
       )
     }
@@ -40,7 +42,7 @@ function mapStateToProps (storeState) {
 function mapDispatchToProps (dispatch) {
   return {
     loadStudents: () => {dispatch(fetchStudents())},
-    // handleClick: (id) => {dispatch(deleteStudent(id))}
+    handleClick: studentId => dispatch(deleteStudent(studentId))
   }
 }
 

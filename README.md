@@ -155,11 +155,18 @@ NOTES
 
 
 required
-                onChange={console.log('changed something! YAY!')}>
+
+
+<div>
+                  <label>Select a Campus: </label>
+                  <select
+                  name="campusId"
+                  required
+                  onChange={handleCampusIdSelect}>
                   {
                     campi.map(campus => {
                       return (<option key={campus.id} value={campus.id}>{campus.name}</option>)
                     })
                   }
-<span>
-                  </span>
+                  </select>
+                  </div>

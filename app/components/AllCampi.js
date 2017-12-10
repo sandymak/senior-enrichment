@@ -14,14 +14,20 @@ class Campi extends Component {
   render() {
     return (
       <div>
-          {
-            this.props.campi.map(campus => {
-              return (
-                <div key={campus.id}>
-                  <Link to={`/campi/${campus.id}`}>{campus.name}</Link>
-                </div>
-              )
-            })}
+        <h1> All Campi </h1>
+        <button>
+          <Link to="/campi/AddCampus"> Add Campus </Link>
+        </button>
+          <div>
+            {
+              this.props.campi.map(campus => {
+                return (
+                  <div key={campus.id}>
+                    <Link to={`/campi/${campus.id}`}>{campus.name}</Link>
+                  </div>
+                )
+              })}
+          </div>
       </div>
     )
   }

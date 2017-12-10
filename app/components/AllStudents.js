@@ -13,16 +13,20 @@ class Students extends Component {
     return (
       <div>
         <h1>All Students</h1>
-
-        <button><Link to="/students/addStudent">Add A Student</Link></button>
-
+        <button>
+          <Link to="/students/addStudent"
+            > Add A Student </Link>
+        </button>
         <div>
         {this.props.students.map(student => {
           const studentId = student.id
           return (
             <div key={student.id}>
-              <Link to={`/students/${student.id}`}>{student.fullName}</Link>
-              <button onClick={() => this.props.handleClick(studentId)}>Expel</button>
+              <Link to={`/students/${studentId}`}>{student.fullName} </Link>
+              <button>
+                <Link to={`/students/editStudent/${studentId}`}
+                > Edit Profile </Link>
+              </button>
             </div>
           )
         })}
@@ -43,7 +47,7 @@ const mapStateToProps = (storeState) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     loadStudents: () => dispatch(fetchStudents()),
-    handleClick: (id) => {dispatch(deleteStudent(id))}
+    handleClick: studentId => dispatch(deleteStudent(studentId))
     }
 }
 

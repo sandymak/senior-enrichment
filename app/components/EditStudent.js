@@ -1,21 +1,16 @@
-// SANDY NOTES : refactoring target -> form should redirect to All Students List if submit is sucessful.
-// SANDY NOTES: if there is an error to the server, shoul dhave message to User.
-
-
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
-import { fetchStudents, postStudent } from '../reducers/studentReducer';
+import { fetchStudents, updateStudent } from '../reducers/studentReducer';
 import { fetchCampi } from '../reducers/campusReducer';
 
-class AddStudent extends Component {
+class EditStudent extends Component {
   constructor() {
     super()
     this.state = {
-      firstName: '',
-      lastName: '',
-      email: '',
-      gpa: '',
+      firstName: null,
+      lastName: null,
+      email: null,
+      gpa: null,
       campusId: null
     };
 
@@ -27,7 +22,7 @@ class AddStudent extends Component {
   }
 
   componentDidMount() {
-    this.props.loadStudents()
+    this.props.loadStudents();
     this.props.loadCampi();
   }
 
@@ -47,61 +42,80 @@ class AddStudent extends Component {
     this.setState({ campusId: event.target.value})
   }
 
+  render () {
 
-  render() {
-    const {campi} = this.props;
-    const {firstName, lastName, email, gpa} = this.state;
+
+    // edit button handler func
     const handleFirstNameChange = this.handleFirstNameChange;
     const handleLastNameChange = this.handleLastNameChange;
     const handleEmailChange = this.handleEmailChange;
     const handleGPAChange = this.handleGPAChange;
     const handleCampusIdSelect = this.handleCampusIdSelect;
 
+    // local state
+    const {firstName, lastName, email, gpa} = this.state;
+
+    // URL and
+    const urlId = Number(this.props.match.params.studentId);
+    const student = this.props.students.find(foundStudent => foundStudent.id === urlId);
+
+    if (student === undefined) {
+      return null
+    }
+    if (student !== undefined) {
+      const studentId = student.id;
+
+        // original info
+    const {campi} = this.props;
+    const firstNameStored = student.firstName;
+    const lastNameStored = student.lastName;
+    const emailStored = student.email;
+    const gpaStored = student.gpa;
+    const campusIdStored = student.campusId;
+
+    const currentState =
+
     return (
       <div>
         <form onSubmit={(event) => {
           event.preventDefault();
-          this.props.handleSubmit(this.state)
+          this.props.handleSubmit(studentId, this.state)
         }}>
           <fieldset>
-            <legend>Hello! Join A Campus</legend>
+            <legend>Update Your Profile!</legend>
               <label>First Name: </label>
                 <input
                 onChange={handleFirstNameChange}
-                required
                 type="text"
                 name="firstName"
-                placeholder="Enter First Name"
+                placeholder={`${firstNameStored}`}
                 value={firstName} />
                 <div />
               <label>Last Name: </label>
                 <input
                 onChange={handleLastNameChange}
-                required
                 type="text"
                 name="lastName"
-                placeholder="Enter Last Name"
+                placeholder={lastNameStored}
                 value={lastName} />
                 <div />
               <label>Email: </label>
                 <input
                 onChange={handleEmailChange}
-                required
                 type="email"
                 name="email"
-                placeholder="Enter Email"
+                placeholder={emailStored}
                 value={email} />
                 <div />
               <label>GPA: </label>
                 <input
                 onChange={handleGPAChange}
-                required
                 type="number"
                 min="0.0"
                 max="4.0"
                 step="0.1"
                 name="gpa"
-                placeholder="Enter GPA"
+                placeholder={gpaStored}
                 value={gpa} />
                 <div />
 
@@ -109,25 +123,38 @@ class AddStudent extends Component {
                   <label>Select a Campus: </label>
                   <select
                   name="campusId"
-                  required
                   onChange={handleCampusIdSelect}>
-                  {
-                    campi.map(campus => {
-                      return (<option key={campus.id} value={campus.id}>{campus.name}</option>)
+                  { campi.map(campus => {
+                      if (campus.id === campusIdStored) {
+                        return (
+                          <option
+                          key={campus.id}
+                          value={campus.id}
+                          disabled selected>{campus.name}
+                          </option>)
+                      } else {
+                        return (
+                          <option
+                          key={campus.id}
+                          value={campus.id}
+                          >{campus.name}
+                          </option>)
+                      }
                     })
                   }
                   </select>
                 </div>
               <div>
-                <button type="submit">Enroll</button>
+                <button type="submit">Update</button>
               </div>
           </fieldset>
         </form>
       </div>
     )
   }
-
+  }
 }
+
 
 function mapStateToProps (storeState) {
   return {
@@ -138,13 +165,13 @@ function mapStateToProps (storeState) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    loadStudents: () => dispatch(fetchStudents()),
+    loadStudents: () => {dispatch(fetchStudents())},
     loadCampi: () => dispatch(fetchCampi()),
-    handleSubmit: (currentState) => dispatch(postStudent(currentState))
+    handleSubmit: (studentId, currentState) => {
+      dispatch(updateStudent(studentId, currentState))}
   }
 }
 
+const EditStudentContainer = connect(mapStateToProps, mapDispatchToProps)(EditStudent);
 
-const AddStudentContainer = connect(mapStateToProps, mapDispatchToProps)(AddStudent);
-
-export default AddStudentContainer;
+export default EditStudentContainer;

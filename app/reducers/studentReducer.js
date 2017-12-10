@@ -5,7 +5,8 @@ const initialState = [];
 // ACTION TYPE
 const GOT_STUDENTS = 'GOT_STUDENTS';
 const NEW_STUDENT = 'NEW_STUDENT';
-const REMOVE_STUDENT = 'REMOVE_STUDENT';
+const REMOVED_STUDENT = 'REMOVED_STUDENT';
+const EDIT_STUDENT = 'EDIT_STUDENT';
 
 // ACTION CREATOR
 const gotStudents = students => {
@@ -24,11 +25,19 @@ const addedStudent = newStudent => {
   return action
 }
 
-const removeStudent = (students) => {
+const removedStudent = (students) => {
   const action = {
-    type: REMOVE_STUDENT,
+    type: REMOVED_STUDENT,
     students
 
+  }
+  return action
+}
+
+const editStudent = (updatedStudent) => {
+  const action = {
+    type: EDIT_STUDENT,
+    updatedStudent
   }
   return action
 }
@@ -48,7 +57,7 @@ export function fetchStudents() {
 
 export function postStudent(newStudent) {
   return function thunkFunc(dispatch) {
-    return axios.post('/api/students/', newStudent)
+    return axios.post('/api/students', newStudent)
       .then(res => res.data)
       .then(student => dispatch(addedStudent(student)))
       .catch(console.error)
@@ -60,7 +69,16 @@ export function deleteStudent(studentId) {
     return axios.delete(`/api/students/${studentId}`)
     .then(() => axios.get('/api/students'))
     .then(res => res.data)
-    .then(students => dispatch(removeStudent(students)))
+    .then(students => dispatch(removedStudent(students)))
+    .catch(console.error)
+  }
+}
+
+export function updateStudent(studentId, currentState) {
+  return function thunkFunc(dispatch) {
+    return axios.put(`/api/students/${studentId}`, currentState)
+    .then(res => res.data)
+    .then(updatedStudent => dispatch(editStudent(updatedStudent)))
     .catch(console.error)
   }
 }
@@ -74,8 +92,11 @@ const studentReducer = (state = initialState, action) => {
     case NEW_STUDENT:
       return [...state, action.newStudent];
 
-    case REMOVE_STUDENT:
-      return action.students
+    case REMOVED_STUDENT:
+      return action.students;
+
+    case EDIT_STUDENT:
+      return [...state, action.updatedStudent];
 
     default:
       return state
