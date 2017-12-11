@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom'
 import { fetchStudents, deleteStudent } from '../reducers/studentReducer';
 
 class SingleStudent extends Component {
@@ -26,7 +27,10 @@ class SingleStudent extends Component {
           <div>Email: {student.email}</div>
           <div>GPA: {student.gpa}</div>
           <div>SchoolName: {`${schoolName}`}</div>
-        <button onClick={() => this.props.handleClick(studentId)}>Remove</button>
+        <button onClick={() => {
+          this.props.handleClick(studentId);
+          this.props.history.push('/students')
+        }}>Remove</button>
         </div>
       )
     }
@@ -46,6 +50,6 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-const SingleStudentContainer = connect(mapStateToProps, mapDispatchToProps)(SingleStudent);
+const SingleStudentContainerWithRouter = withRouter(connect(mapStateToProps, mapDispatchToProps)(SingleStudent));
 
-export default SingleStudentContainer;
+export default SingleStudentContainerWithRouter;

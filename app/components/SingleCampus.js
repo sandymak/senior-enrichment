@@ -3,6 +3,7 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { fetchCampi, deleteCampus } from '../reducers/campusReducer';
 
 class SingleCampus extends Component {
@@ -38,7 +39,10 @@ class SingleCampus extends Component {
               }
             })()}
             </div>
-            <button onClick={() => this.props.handleClick(campusId)}> Remove </button>
+            <button onClick={() => {
+              this.props.handleClick(campusId);
+              this.props.history.push('/campi')
+            }}> Remove </button>
         </div>
       )
     }
@@ -58,6 +62,6 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-const SingleCampusContainer = connect(mapStateToProps, mapDispatchToProps)(SingleCampus);
+const SingleCampusContainerWithRouter = withRouter(connect(mapStateToProps, mapDispatchToProps)(SingleCampus));
 
-export default SingleCampusContainer;
+export default SingleCampusContainerWithRouter;

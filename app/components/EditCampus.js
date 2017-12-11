@@ -10,8 +10,7 @@ class EditCampus extends Component {
    this.state = {
      name: '',
      description: '',
-     imageUrl: '',
-     error: false
+     imageUrl: ''
    };
 
    this.handleNameChange = this.handleNameChange.bind(this);

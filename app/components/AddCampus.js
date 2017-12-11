@@ -44,8 +44,8 @@ class AddCampus extends Component {
 
     const currentState = {
       name: name,
-      description: description ? description : null,
-      imageUrl: imageUrl ? imageUrl : null
+      description: description ? description : undefined,
+      imageUrl: imageUrl ? imageUrl : undefined
     }
 
     return (
