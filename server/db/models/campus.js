@@ -18,9 +18,6 @@ module.exports = db.define('campus', {
   },
   imageUrl: {
     type: Sequelize.STRING,
-    defaultValue: 'https://i.imgur.com/rP71Q5Q.png',
-    validate: {
-      isUrl: true
-    }
+    defaultValue: 'https://i.imgur.com/rP71Q5Q.png'
   }
 });

@@ -6,6 +6,7 @@ const initialState = [];
 const GOT_CAMPI = 'GOT_CAMPI';
 const NEW_CAMPUS = 'NEW_CAMPUS';
 const REMOVED_CAMPUS = 'REMOVED_CAMPUS';
+const EDITED_CAMPUS = 'EDITED_CAMPUS';
 
 
 // Action Creator
@@ -29,6 +30,14 @@ const removedCampus = (campi) => {
   const action = {
     type: REMOVED_CAMPUS,
     campi
+  }
+  return action
+}
+
+const editedCampus = (updatedCampus) => {
+  const action = {
+    type: EDITED_CAMPUS,
+    updatedCampus
   }
   return action
 }
@@ -60,17 +69,30 @@ export function deleteCampus (campusId) {
     .catch(console.error)
   }
 }
+
+export function updatedCampus (campusId, currentState) {
+  return function thunkFunc (dispatch) {
+    axios.put(`/api/campi/${campusId}`, currentState)
+    .then(res => res.data)
+    .then(updated => dispatch(editedCampus(updated)))
+    .catch(console.error)
+  }
+}
+
 // reducer
 const campusReducer = (state = initialState, action) => {
   switch (action.type) {
     case GOT_CAMPI:
       return action.campi;
 
-     case NEW_CAMPUS:
-        return [...state, action.campi];
+    case NEW_CAMPUS:
+      return [...state, action.campi];
 
-      case REMOVED_CAMPUS:
-        return action.campi;
+    case REMOVED_CAMPUS:
+      return action.campi;
+
+    case EDITED_CAMPUS:
+      return [...state, action.updatedCampus];
 
     default:
       return state

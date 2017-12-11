@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+
 import { fetchCampi, postCampus } from '../reducers/campusReducer';
 
 class AddCampus extends Component {
@@ -8,10 +10,12 @@ class AddCampus extends Component {
     this.state = {
       name:  '',
       description: '',
+      imageUrl: ''
     }
 
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
+    this.handleImageUrlChange = this.handleImageUrlChange.bind(this);
 
   }
 
@@ -28,14 +32,29 @@ class AddCampus extends Component {
     this.setState({description: event.target.value})
   }
 
+  handleImageUrlChange(event) {
+    this.setState({imageUrl: event.target.value})
+  }
+
   render() {
-    const {name, description} = this.state;
+    const {name, description, imageUrl} = this.state;
     const handleNameChange = this.handleNameChange;
     const handleDescriptionChange = this.handleDescriptionChange;
+    const handleImageUrlChange = this.handleImageUrlChange;
+
+    const currentState = {
+      name: name,
+      description: description ? description : null,
+      imageUrl: imageUrl ? imageUrl : null
+    }
 
     return (
       <div>
-        <form>
+        <form onSubmit={(event) => {
+          event.preventDefault();
+          this.props.handleSubmit(currentState);
+          this.props.history.push('/campi')
+        }}>
           <fieldset>
             <legend>Hello! Join Our Academy</legend>
               <label>Name: </label>
@@ -48,13 +67,27 @@ class AddCampus extends Component {
                 value={name} />
                 <div />
               <label>Description: </label>
-                <textarea
-                onChange={handleDescriptionChange}
-                name="description"
-                placeholder="Tell us about your campus..."
-                value={description} />
+                <div>
+                  <textarea
+                  rows="20"
+                  cols="100"
+                  onChange={handleDescriptionChange}
+                  name="description"
+                  placeholder="Tell us about your campus..."
+                  value={description} />
+                </div>
                 <div />
-              <label />
+              <label>Campus Photo: </label>
+                <input
+                onChange={handleImageUrlChange}
+                type="url"
+                name="imageUrl"
+                placeholder="Add Photo URL"
+                value={imageUrl} />
+                <div />
+            <div>
+              <button type="submit"> Add Campus </button>
+            </div>
           </fieldset>
         </form>
       </div>
@@ -70,11 +103,12 @@ function mapStateToProps (storeState) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    loadCampi: () => dispatch(fetchCampi())
-    }
+    loadCampi: () => dispatch(fetchCampi()),
+    handleSubmit: (currentState) => dispatch(postCampus(currentState))
+  }
 }
 
-const AddCampusContainer = connect(mapStateToProps, mapDispatchToProps)(AddCampus)
+const AddCampusContainerWithRouter = withRouter(connect(mapStateToProps, mapDispatchToProps)(AddCampus))
 
-export default AddCampusContainer;
+export default AddCampusContainerWithRouter;
 

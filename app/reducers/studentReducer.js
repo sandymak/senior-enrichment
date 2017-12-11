@@ -6,7 +6,7 @@ const initialState = [];
 const GOT_STUDENTS = 'GOT_STUDENTS';
 const NEW_STUDENT = 'NEW_STUDENT';
 const REMOVED_STUDENT = 'REMOVED_STUDENT';
-const EDIT_STUDENT = 'EDIT_STUDENT';
+const EDITED_STUDENT = 'EDITED_STUDENT';
 
 // ACTION CREATOR
 const gotStudents = students => {
@@ -34,9 +34,9 @@ const removedStudent = (students) => {
   return action
 }
 
-const editStudent = (updatedStudent) => {
+const editedStudent = (updatedStudent) => {
   const action = {
-    type: EDIT_STUDENT,
+    type: EDITED_STUDENT,
     updatedStudent
   }
   return action
@@ -78,7 +78,7 @@ export function updateStudent(studentId, currentState) {
   return function thunkFunc(dispatch) {
     return axios.put(`/api/students/${studentId}`, currentState)
     .then(res => res.data)
-    .then(updatedStudent => dispatch(editStudent(updatedStudent)))
+    .then(updated => dispatch(editedStudent(updated)))
     .catch(console.error)
   }
 }
@@ -95,7 +95,7 @@ const studentReducer = (state = initialState, action) => {
     case REMOVED_STUDENT:
       return action.students;
 
-    case EDIT_STUDENT:
+    case EDITED_STUDENT:
       return [...state, action.updatedStudent];
 
     default:

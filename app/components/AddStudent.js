@@ -4,6 +4,7 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import { fetchStudents, postStudent } from '../reducers/studentReducer';
 import { fetchCampi } from '../reducers/campusReducer';
@@ -61,7 +62,8 @@ class AddStudent extends Component {
       <div>
         <form onSubmit={(event) => {
           event.preventDefault();
-          this.props.handleSubmit(this.state)
+          this.props.handleSubmit(this.state);
+          this.props.history.push('/students')
         }}>
           <fieldset>
             <legend>Hello! Join A Campus</legend>
@@ -145,6 +147,6 @@ function mapDispatchToProps (dispatch) {
 }
 
 
-const AddStudentContainer = connect(mapStateToProps, mapDispatchToProps)(AddStudent);
+const AddStudentContainerWithRouter = withRouter(connect(mapStateToProps, mapDispatchToProps)(AddStudent));
 
-export default AddStudentContainer;
+export default AddStudentContainerWithRouter;

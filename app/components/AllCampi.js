@@ -21,9 +21,13 @@ class Campi extends Component {
           <div>
             {
               this.props.campi.map(campus => {
+                const campusId = campus.id;
                 return (
                   <div key={campus.id}>
-                    <Link to={`/campi/${campus.id}`}>{campus.name}</Link>
+                    <Link to={`/campi/${campus.id}`}> {campus.name} </Link>
+                    <button>
+                      <Link to={`/campi/editCampus/${campusId}`}> Edit Profile </Link>
+                    </button>
                   </div>
                 )
               })}

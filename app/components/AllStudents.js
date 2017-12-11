@@ -22,7 +22,7 @@ class Students extends Component {
           const studentId = student.id
           return (
             <div key={student.id}>
-              <Link to={`/students/${studentId}`}>{student.fullName} </Link>
+              <Link to={`/students/${studentId}`}> {student.fullName}  </Link>
               <button>
                 <Link to={`/students/editStudent/${studentId}`}
                 > Edit Profile </Link>

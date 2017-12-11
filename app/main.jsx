@@ -11,11 +11,12 @@ import store from './store'
 import Navbar from './components/Navbar';
 import Home from './components/Home';
 import AddCampus from './components/AddCampus';
+import EditCampus from './components/EditCampus';
 import SingleCampus from './components/SingleCampus';
 import AllCampi from './components/AllCampi';
 import AddStudent from './components/AddStudent';
-import SingleStudent from './components/SingleStudent';
 import EditStudent from './components/EditStudent';
+import SingleStudent from './components/SingleStudent';
 import AllStudents from './components/AllStudents';
 
 
@@ -27,6 +28,7 @@ render(
           <Switch>
           <Route path="/home" component={Home} />
           <Route exact path="/campi/addCampus" component={AddCampus} />
+          <Route exact path="/campi/editCampus/:campusId" component={EditCampus} />
           <Route exact path="/campi/:campusId" component={SingleCampus} />
           <Route path="/campi" component={AllCampi} />
           <Route exact path="/students/addStudent" component={AddStudent} />

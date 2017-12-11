@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchStudents, updateStudent } from '../reducers/studentReducer';
 import { fetchCampi } from '../reducers/campusReducer';
@@ -7,11 +8,11 @@ class EditStudent extends Component {
   constructor() {
     super()
     this.state = {
-      firstName: null,
-      lastName: null,
-      email: null,
-      gpa: null,
-      campusId: null
+      firstName: '',
+      lastName: '',
+      email: '',
+      gpa: '',
+      campusId: ''
     };
 
     this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
@@ -44,7 +45,6 @@ class EditStudent extends Component {
 
   render () {
 
-
     // edit button handler func
     const handleFirstNameChange = this.handleFirstNameChange;
     const handleLastNameChange = this.handleLastNameChange;
@@ -53,7 +53,7 @@ class EditStudent extends Component {
     const handleCampusIdSelect = this.handleCampusIdSelect;
 
     // local state
-    const {firstName, lastName, email, gpa} = this.state;
+    const {firstName, lastName, email, gpa, campusId} = this.state;
 
     // URL and
     const urlId = Number(this.props.match.params.studentId);
@@ -73,13 +73,20 @@ class EditStudent extends Component {
     const gpaStored = student.gpa;
     const campusIdStored = student.campusId;
 
-    const currentState =
+    const currentState = {
+      firstName: firstName ? firstName : firstNameStored,
+      lastName: lastName ? lastName : lastNameStored,
+      email: email ? email : emailStored,
+      gpa: gpa ? gpa : gpaStored,
+      campusId: campusId ? campusId : campusIdStored
+    }
 
     return (
       <div>
         <form onSubmit={(event) => {
           event.preventDefault();
-          this.props.handleSubmit(studentId, this.state)
+          this.props.handleSubmit(studentId, currentState);
+          this.props.history.push('/students')
         }}>
           <fieldset>
             <legend>Update Your Profile!</legend>
@@ -130,7 +137,8 @@ class EditStudent extends Component {
                           <option
                           key={campus.id}
                           value={campus.id}
-                          disabled selected>{campus.name}
+                          disabled
+                          defaultValue>{`${campus.name} (currently enrolled)`}
                           </option>)
                       } else {
                         return (
@@ -172,6 +180,6 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-const EditStudentContainer = connect(mapStateToProps, mapDispatchToProps)(EditStudent);
+const EditStudentContainerWithRouter = withRouter(connect(mapStateToProps, mapDispatchToProps)(EditStudent));
 
-export default EditStudentContainer;
+export default EditStudentContainerWithRouter;
