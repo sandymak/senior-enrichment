@@ -42,6 +42,7 @@ class AddCampus extends Component {
     const handleDescriptionChange = this.handleDescriptionChange;
     const handleImageUrlChange = this.handleImageUrlChange;
 
+
     const currentState = {
       name: name,
       description: description ? description : undefined,

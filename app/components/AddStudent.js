@@ -17,7 +17,7 @@ class AddStudent extends Component {
       lastName: '',
       email: '',
       gpa: '',
-      campusId: null
+      campusId: ''
     };
 
     this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
@@ -51,18 +51,26 @@ class AddStudent extends Component {
 
   render() {
     const {campi} = this.props;
-    const {firstName, lastName, email, gpa} = this.state;
+    const {firstName, lastName, email, gpa, campusId} = this.state;
     const handleFirstNameChange = this.handleFirstNameChange;
     const handleLastNameChange = this.handleLastNameChange;
     const handleEmailChange = this.handleEmailChange;
     const handleGPAChange = this.handleGPAChange;
     const handleCampusIdSelect = this.handleCampusIdSelect;
 
+    const currentState = {
+      firstName,
+      lastName,
+      email,
+      gpa,
+      campusId: campusId ? campusId : null
+    }
+
     return (
       <div>
         <form onSubmit={(event) => {
           event.preventDefault();
-          this.props.handleSubmit(this.state);
+          this.props.handleSubmit(currentState);
           this.props.history.push('/students')
         }}>
           <fieldset>
@@ -113,6 +121,10 @@ class AddStudent extends Component {
                   name="campusId"
                   required
                   onChange={handleCampusIdSelect}>
+                  <option
+                  value=""
+                  name="default"
+                  defaultValue> Please Select </option>
                   {
                     campi.map(campus => {
                       return (<option key={campus.id} value={campus.id}>{campus.name}</option>)

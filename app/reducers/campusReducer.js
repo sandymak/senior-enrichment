@@ -86,13 +86,13 @@ const campusReducer = (state = initialState, action) => {
       return action.campi;
 
     case NEW_CAMPUS:
-      return [...state, action.campi];
+      return [...state, action.newCampus];
 
     case REMOVED_CAMPUS:
       return action.campi;
 
     case EDITED_CAMPUS:
-      return [...state, action.updatedCampus];
+    return [...state.filter(campus => campus.id !== action.updatedCampus.id), action.updatedCampus]
 
     default:
       return state

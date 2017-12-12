@@ -10,6 +10,7 @@ import store from './store'
 // components
 import Navbar from './components/Navbar';
 import Home from './components/Home';
+import ErrorMessage from './components/ErrorMessage';
 import AddCampus from './components/AddCampus';
 import EditCampus from './components/EditCampus';
 import SingleCampus from './components/SingleCampus';
@@ -27,6 +28,7 @@ render(
         <Navbar />
           <Switch>
           <Route path="/home" component={Home} />
+          <Route exact path="/campi/error" component={ErrorMessage} />
           <Route exact path="/campi/addCampus" component={AddCampus} />
           <Route exact path="/campi/editCampus/:campusId" component={EditCampus} />
           <Route exact path="/campi/:campusId" component={SingleCampus} />

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 import { fetchStudents, deleteStudent } from '../reducers/studentReducer';
 
 class SingleStudent extends Component {
@@ -17,7 +17,6 @@ class SingleStudent extends Component {
       return null
     }
     if (student !== undefined) {
-      const schoolName = student.campus ? student.campus.name : 'Waiting for acceptance...'
       const studentId = student.id;
 
       return (
@@ -26,7 +25,20 @@ class SingleStudent extends Component {
           <div>LastName: {student.lastName}</div>
           <div>Email: {student.email}</div>
           <div>GPA: {student.gpa}</div>
-          <div>SchoolName: {`${schoolName}`}</div>
+          <div>
+          {(() => {
+            let schoolName, campusId;
+            switch (student.campus) {
+              case null:
+                schoolName = 'Waiting for acceptance...'
+                return (<div>SchoolName: <Link to={`/students/editStudent/${studentId}`}>{`${schoolName}`}</Link></div>)
+              default:
+                schoolName = student.campus.name
+                campusId = student.campus.id
+                return (<div>SchoolName: <Link to={`/campi/${campusId}`}>{`${schoolName}`}</Link></div>)
+              }
+            })()}
+              </div>
         <button onClick={() => {
           this.props.handleClick(studentId);
           this.props.history.push('/students')

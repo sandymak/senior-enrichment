@@ -96,7 +96,7 @@ const studentReducer = (state = initialState, action) => {
       return action.students;
 
     case EDITED_STUDENT:
-      return [...state, action.updatedStudent];
+      return [...state.filter(student => student.id !== action.updatedStudent.id), action.updatedStudent]
 
     default:
       return state

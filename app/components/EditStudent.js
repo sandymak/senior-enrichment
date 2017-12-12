@@ -129,16 +129,21 @@ class EditStudent extends Component {
                 <div>
                   <label>Select a Campus: </label>
                   <select
+                  value={campusId}
                   name="campusId"
                   onChange={handleCampusIdSelect}>
+                  <option
+                    value=""
+                    name="default"
+                    defaultValue> Please Select </option>
                   { campi.map(campus => {
                       if (campus.id === campusIdStored) {
                         return (
+
                           <option
                           key={campus.id}
                           value={campus.id}
-                          disabled
-                          defaultValue>{`${campus.name} (currently enrolled)`}
+                          disabled>{`${campus.name} (currently enrolled)`}
                           </option>)
                       } else {
                         return (
