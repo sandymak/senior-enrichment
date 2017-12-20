@@ -145,28 +145,3 @@ NOTES
 
   </table>
 
-
-...// submit....
-<input
-                type="text"
-                name=""
-
-              />
-
-
-required
-
-
-<div>
-                  <label>Select a Campus: </label>
-                  <select
-                  name="campusId"
-                  required
-                  onChange={handleCampusIdSelect}>
-                  {
-                    campi.map(campus => {
-                      return (<option key={campus.id} value={campus.id}>{campus.name}</option>)
-                    })
-                  }
-                  </select>
-                  </div>
